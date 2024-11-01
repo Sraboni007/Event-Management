@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Booked Events - Event Management System{% endblock %}
+
+{% block content %}
+<h1>Your Booked Events</h1>
+
+{% if bookings %}
+    {% for booking in bookings %}
+        <div class="event">
+            <h2>{{ booking.event.name }}</h2>
+            <p>{{ booking.event.date }} - {{ booking.event.location }}</p>
+            <p>{{ booking.event.description }}</p>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>You have not booked any events.</p>
+{% endif %}
+{% endblock %}

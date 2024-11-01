@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Event Management System{% endblock %}
+
+{% block content %}
+<h1>All Events</h1>
+
+{% for event in events %}
+    <div class="event">
+        <h2><a href="{% url 'event_detail' event.id %}">{{ event.name }}</a></h2>
+        <p>{{ event.date }} - {{ event.location }}</p>
+        <p>{{ event.description }}</p>
+        <p>Category: {{ event.get_category_display }}</p>
+        {% if event.is_fully_booked %}
+            <p class="status">Status: Fully Booked</p>
+        {% else %}
+            {% if user.is_authenticated %}
+                {% if event.id in booked_events %}
+                    <p class="status">Status: Booked</p>
+                {% else %}
+                    <a href="{% url 'book_event' event.id %}">Book Now</a>
+                {% endif %}
+            {% else %}
+                <a href="{% url 'login' %}">Login to Book</a>
+            {% endif %}
+        {% endif %}
+    </div>
+{% endfor %}
+{% endblock %}
